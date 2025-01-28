@@ -258,6 +258,138 @@
             updateCartDisplay();
             cartSidebar.classList.remove('cart-visible');
         });
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Previous head content remains same -->
+    <style>
+        /* Add language toggle to existing styles */
+        .lang-toggle {
+            margin-left: 1rem;
+            cursor: pointer;
+            background: #f0f0f0;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modified Header -->
+    <header>
+        <nav>
+            <div class="logo" data-en="Healthy Office Bites" data-es="Bocados Saludables de Oficina">Healthy Office Bites</div>
+            <div class="nav-right">
+                <span class="lang-toggle" onclick="toggleLanguage()" data-en="ES" data-es="EN">ES</span>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Bilingual Hero Section -->
+    <section class="hero">
+        <h1 data-en="Healthy Meals Delivered to Your Office" 
+            data-es="Comidas Saludables Entregadas en tu Oficina">
+            Healthy Meals Delivered to Your Office
+        </h1>
+        <p data-en="Get fresh, dietitian-approved meals starting at $12/day"
+           data-es="Obtén comidas frescas aprobadas por dietistas desde $12/día">
+            Get fresh, dietitian-approved meals starting at $12/day
+        </p>
+        <a href="#pricing" class="cta-button" 
+           data-en="Weekly Plan: $126" 
+           data-es="Plan Semanal: $126"
+           style="margin-top: 20px;">Weekly Plan: $126</a>
+    </section>
+
+    <!-- Bilingual Menu Items -->
+    <div class="menu-grid">
+        <!-- Meal 1 -->
+        <div class="menu-item">
+            <img src="meal1.jpg" alt="Grilled Chicken Salad">
+            <div class="item-info">
+                <h3 data-en="Grilled Chicken Salad" data-es="Ensalada de Pollo a la Parrilla">Grilled Chicken Salad</h3>
+                <p data-en="400 calories | High Protein" data-es="400 calorías | Alto en Proteínas">400 calories | High Protein</p>
+                <p>$12.00</p>
+                <button class="add-to-cart" data-en="Add to Cart" data-es="Añadir al Carrito">Add to Cart</button>
+            </div>
+        </div>
+        <!-- Add more meal items with translations -->
+    </div>
+
+    <!-- Bilingual Cart -->
+    <div class="cart-sidebar">
+        <h2 data-en="Your Cart" data-es="Tu Carrito">Your Cart</h2>
+        <div class="cart-items"></div>
+        <div class="checkout-section">
+            <h3 data-en="Total:" data-es="Total:">Total:</h3>
+            <button class="checkout-button" data-en="Checkout" data-es="Pagar">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        // Language Toggle Function
+        let currentLang = 'en';
+        const translations = {
+            cartItems: {
+                en: "Your Cart",
+                es: "Tu Carrito"
+            },
+            // Add more dynamic content translations here
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            
+            // Update static content
+            document.querySelectorAll('[data-en], [data-es]').forEach(element => {
+                if(element.dataset[currentLang]) {
+                    element.textContent = element.dataset[currentLang];
+                }
+            });
+
+            // Update dynamic cart items
+            updateCartDisplay();
+            
+            // Update language toggle button
+            document.querySelector('.lang-toggle').textContent = currentLang === 'en' ? 'ES' : 'EN';
+        }
+
+        // Modified Cart Functionality
+        function updateCartDisplay() {
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <h4>${item.name[currentLang]}</h4>
+                    <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        // Modified Add to Cart with translations
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = {
+                    name: {
+                        en: button.parentElement.querySelector('h3').dataset.en,
+                        es: button.parentElement.querySelector('h3').dataset.es
+                    },
+                    price: parseFloat(button.parentElement.querySelector('p:nth-of-type(2)').textContent.replace('$', '')),
+                    quantity: 1
+                };
+
+                // Rest of cart logic remains same
+            });
+        });
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
